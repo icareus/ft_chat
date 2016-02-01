@@ -3,35 +3,34 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
+#    By: abarbaro <abarbaro@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2013/11/30 05:29:40 by abarbaro          #+#    #+#              #
-#    Updated: 2014/12/27 12:24:56 by root             ###   ########.fr        #
+#    Updated: 2015/01/03 18:32:25 by abarbaro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
-CFLAGS = -g3 -Wall -Werror
-NAME = bircd
-LIBDIR = ./libft/
-LIB = $(LIBDIR)libft.a
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra
+NAME = libft.a
 SRCDIR = ./src/
+HEADIR = ./includes/
 SRCFIL = $(shell ls $(SRCDIR) | grep "\.c")
 SRC = $(addprefix $(SRCDIR),$(SRCFIL))
 ODIR = ./OBJECTS/
-IDIR = ./includes/
 SRCO = $(SRCFIL:.c=.o)
 BLU = tput setaf 4
 GRN = tput setaf 2
 WHT = tput setaf 7
 NOCOLOR = tput sgr 0
 
-all: $(LIB) $(NAME)
+all: $(NAME)
 
 $(NAME): objects
 	@$(BLU)
 	@echo "Making $(NAME)..."
-	@$(CC) $(addprefix $(ODIR),$(SRCO)) -o $(NAME) -L$(LIBDIR) -lft
+	@ar -rc $(NAME) $(addprefix $(ODIR),$(SRCO))
+	@ranlib $(NAME)
 	@$(WHT)
 	@echo "$(NAME) done."
 	@$(NOCOLOR)
@@ -39,19 +38,11 @@ $(NAME): objects
 objects:
 	@$(BLU)
 	@echo "Making objects..."
-	@$(CC) $(CFLAGS) -c $(SRC) -I ./includes -I $(LIBDIR)includes -I $(IDIR)
+	@$(CC) $(CFLAGS) -c $(SRC) -I $(HEADIR)
 	@mkdir -p $(ODIR)
 	@mv $(SRCO) $(ODIR)
 	@$(WHT)
 	@echo "objects done."
-	@$(NOCOLOR)
-
-$(LIB):
-	@$(BLU)
-	@echo "Building dependencies..."
-	@make -C $(LIBDIR)
-	@$(WHT)
-	@echo "Dependencies done."
 	@$(NOCOLOR)
 
 re: fclean all
@@ -60,7 +51,6 @@ re: fclean all
 	@$(NOCOLOR)
 
 clean:
-	@make -C libft/ fclean
 	@$(BLU)
 	@echo "Cleaning objects..."
 	rm -rf $(ODIR)
