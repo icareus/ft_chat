@@ -10,45 +10,46 @@
 #                                                                              #
 # **************************************************************************** #
 
+# building
 CC = cc
 CFLAGS = -g3 -Wall -Werror
-NAME = bircd
+# project files arch
+SRVNAME = serveur
+SRVDIR = ./srv
+CLINAME = client
+CLIDIR = ./cli
 LIBDIR = ./libft/
 LIB = $(LIBDIR)libft.a
-SRCDIR = ./src/
-SRCFIL = $(shell ls $(SRCDIR) | grep "\.c")
-SRC = $(addprefix $(SRCDIR),$(SRCFIL))
-ODIR = ./OBJECTS/
-IDIR = ./includes/
-SRCO = $(SRCFIL:.c=.o)
+# coloring
 BLU = tput setaf 4
 GRN = tput setaf 2
 WHT = tput setaf 7
 NOCOLOR = tput sgr 0
 
-all: $(LIB) $(NAME)
+all: $(LIB) $(SRVNAME) $(CLINAME)
 
-$(NAME): objects
+$(SRVNAME): $(LIB)
+	@$(GRN)
+	@echo "Building server..."
 	@$(BLU)
-	@echo "Making $(NAME)..."
-	@$(CC) $(addprefix $(ODIR),$(SRCO)) -o $(NAME) -L$(LIBDIR) -lft
+	@make -C $(SRVDIR)
 	@$(WHT)
-	@echo "$(NAME) done."
+	@echo "server done."
 	@$(NOCOLOR)
 
-objects:
+$(CLINAME): $(LIB)
+	@$(GRN)
+	@echo "Building client..."
 	@$(BLU)
-	@echo "Making objects..."
-	@$(CC) $(CFLAGS) -c $(SRC) -I ./includes -I $(LIBDIR)includes -I $(IDIR)
-	@mkdir -p $(ODIR)
-	@mv $(SRCO) $(ODIR)
+	@make -C $(CLIDIR)
 	@$(WHT)
-	@echo "objects done."
+	@echo "client done."
 	@$(NOCOLOR)
 
 $(LIB):
-	@$(BLU)
+	@$(GRN)
 	@echo "Building dependencies..."
+	@$(BLU)
 	@make -C $(LIBDIR)
 	@$(WHT)
 	@echo "Dependencies done."
@@ -60,18 +61,20 @@ re: fclean all
 	@$(NOCOLOR)
 
 clean:
-	@make -C libft/ fclean
-	@$(BLU)
-	@echo "Cleaning objects..."
-	rm -rf $(ODIR)
-	@$(WHT)
-	@echo "$(NAME) - Cleaning done."
+	@$(GRN)
+	@echo "Cleaning..."
+	@$(NOCOLOR)
+	@make -C $(LIBDIR) clean
+	@make -C $(SRVDIR) clean
+	@make -C $(CLIDIR) clean
 	@$(NOCOLOR)
 
 fclean: clean
 	@$(BLU)
-	@echo "Deleting output..."
-	rm -f $(NAME)
+	@make -C $(LIBDIR) fclean
+	@make -C $(SRVDIR) fclean
+	@make -C $(CLIDIR) fclean
+	@$(NOCOLOR)
 	@$(WHT)
 	@echo "$(NAME) - Deletion done."
 	@$(NOCOLOR)
