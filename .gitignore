@@ -3,4 +3,4 @@ srv/OBJECTS
 libft/OBJECTS
 ./client
 ./serveur
-./libft/libft.a
+libft/libft.a
