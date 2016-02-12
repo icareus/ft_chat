@@ -21,6 +21,7 @@ SRC = $(addprefix $(SRCDIR),$(SRCFIL))
 ODIR = ./OBJECTS/
 IDIR = ./includes/
 SRCO = $(SRCFIL:.c=.o)
+# Output coloring
 BLU = tput setaf 4
 GRN = tput setaf 2
 WHT = tput setaf 7

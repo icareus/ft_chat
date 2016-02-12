@@ -1,4 +1,3 @@
-
 #include "bircd.h"
 
 void	check_fd(t_env *e)

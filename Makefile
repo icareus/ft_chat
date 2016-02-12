@@ -69,7 +69,7 @@ clean:
 	@make -C $(CLIDIR) clean
 	@$(NOCOLOR)
 
-fclean: clean
+fclean:
 	@$(BLU)
 	@make -C $(LIBDIR) fclean
 	@make -C $(SRVDIR) fclean

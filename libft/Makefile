@@ -32,7 +32,7 @@ $(NAME): objects
 	@ar -rc $(NAME) $(addprefix $(ODIR),$(SRCO))
 	@ranlib $(NAME)
 	@$(WHT)
-	@echo "server done."
+	@echo "$(NAME) done."
 	@$(NOCOLOR)
 
 objects:

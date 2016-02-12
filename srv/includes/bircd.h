@@ -1,6 +1,5 @@
 #ifndef BIRCD_H_
 # define BIRCD_H_
-
 # include <sys/select.h>
 
 # define FD_FREE	0
