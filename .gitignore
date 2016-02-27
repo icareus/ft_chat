@@ -1,6 +1,6 @@
 cli/OBJECTS
 srv/OBJECTS
 libft/OBJECTS
-./client
-./serveur
+client
+serveur
 libft/libft.a
