@@ -65,3 +65,4 @@ fclean: clean
 	@$(WHT)
 	@echo "$(NAME) - Deletion done."
 	@$(NOCOLOR)
+
